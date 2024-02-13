@@ -269,8 +269,7 @@ We will further prove that the above protocol is resilient against replay attack
 Indeed, if an attacker wants to forge a message C -> A, then A can be completely checked with counter~AC~. In addition, an attacker without the key k~AC~ can not expose and get the value of counter~AC~. Next, if the imposter has the session key k~s~ and wants to establish a fake conversation between A and B, it will not work because A -> B needs additional information counter~AB~, if the attacker does not have the key k~BC~ then it is not possible to see counter~AB~, through which B can completely detect the fake enemy and not establish the link. 
  
 
-
-
+<!--
 chosen-plaintext attack:
 - Attacker chooses his own plaintext and sign or encrypt it. 
 - In other words, the attacker can create plaintext and turn it into ciphertext to 
@@ -311,3 +310,4 @@ Issue: 	after Step 4: A and B share common session key k_s only people who have
 	that. Then when B challenge A with r2 that force A responce B with 
 	something only from r2 mapping to it. So that B can confirm that 
 	responce from A and not some body can evedrop from it
+-->
