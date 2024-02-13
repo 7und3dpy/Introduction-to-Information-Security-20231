@@ -55,11 +55,11 @@ Ex: During a security lecture, instructor Lam introduced a simple basic protocol
 
 PRT_AU: 
 
-1)     A-->S: ID~A
+1.  A-->S: ID<sub>A</sub>
 
-2)     S-->A: Password Request
+2.  S-->A: Password Request
 
-3)     A-->S: H(PW~A~)||T  
+3.  A-->S: H(PW<sub>A</sub>)||T  
 
 PRT_00 (An):
 
@@ -71,41 +71,41 @@ PRT_00 (An):
 
 PRT_10 (Binh):
 
-1) A-->S: ID~A~
+1) A-->S: ID<sub>A</sub>
 
 2) S-->A: R
 
-3) A-->S: H(PW~A~||R)
+3) A-->S: H(PW<sub>A</sub>||R)
 
-4) S-->A: {k~s~}p~A~
+4) S-->A: {k<sub>s</sub>}p<sub>A</sub>
 
 PRT_01 (Chi):
 
-A-->S: ID~A~ || H(PW~A~||T) || T
+A-->S: ID<sub>A</sub> || H(PW<sub>A</sub>||T) || T
 
 
 PRT_11 (Dung):
 
-1)     A-->S: ID~A
+1)  A-->S: ID<sub>A</sub>
 
-2)     S-->A: R
+2)  S-->A: R
 
-3)     A-->S: {R+1}p~A
+3)  A-->S: {R+1}p<sub>A</sub>
 
-4)     S-->A: {k~s}p~A where pA = H(PW~A)
+4)  S-->A: {k<sub>s</sub>}p<sub>A</sub> where pA = H(PW<sub>A</sub>)
 
 The symbols used above have the following meanings:
 
-ID~A~ – is the ID (identity) of A; R is a random number; T is a timestamp at the current time (by computer clock)
+ID<sub>A</sub> – is the ID (identity) of A; R is a random number; T is a timestamp at the current time (by computer clock)
 
-PW~A~ is A's password string; pA is the hash value of A's password, i.e. p~A~ =H(PW~A~) and where H is a pre-determined hash function.
+PW<sub>A</sub> is A's password string; pA is the hash value of A's password, i.e. p<sub>A</sub> =H(PW<sub>A</sub>) and where H is a pre-determined hash function.
 
 
 Q1: Analyze the purpose of PRT_AU and then compare PROT_0x to clearly see the advantages and disadvantages.
 
 Sol:
 
-The purpose of the PRT_AU is to authenticate identityy in password login. However, the system (S) only needs to store the hash value of their password. When analyzing the difference with An or Chi's solution, it should be clearly stated that the PRT_AU solution is weaker because it seems to use timestamp to prevent replay attacks but fails because the adversary can completely create fake T combined with H(PW~A~) eavesdropping. Meanwhile, An/Chi's GP can resist replay attacks: An's can uses a challenge-response mechanism with a random number R, while Chi's puts T in the hash so it cannot be interfered with. Both of these solutions S always stores A's password itself (not just the hash value).
+The purpose of the PRT_AU is to authenticate identityy in password login. However, the system (S) only needs to store the hash value of their password. When analyzing the difference with An or Chi's solution, it should be clearly stated that the PRT_AU solution is weaker because it seems to use timestamp to prevent replay attacks but fails because the adversary can completely create fake T combined with H(PW<sub>A</sub>) eavesdropping. Meanwhile, An/Chi's GP can resist replay attacks: An's can uses a challenge-response mechanism with a random number R, while Chi's puts T in the hash so it cannot be interfered with. Both of these solutions S always stores A's password itself (not just the hash value).
 
 Q2: Analysis clearly shows the differences and new features of PROT_1Y compared to the two protocols in the above sentence (1) ?
 
@@ -116,17 +116,17 @@ The general novelty compared to PRT_AU is authentication with a challenge-respon
 Q3: Mr. Lam then presented another advanced version and challenged the class to analyze and find the remaining problem.
 
 
-1) A-->S: ID~A~ || ID~B~ || r~1~
-2) S-->A: {ID~A~ || ID~B~ || r~1~ || k~s~ || {ID~A~ || k~s~ || r~1~} p~B~ } p~A~
-3) A-->B: {ID~A~ || k~s~ || r~1~} p~B~
-4) B-->A: {r~2~} k~s~
-5) A-->B: {r~1~ + r~2~} k~s~
+1) A-->S: ID<sub>A</sub> || ID<sub>B</sub> || r<sub>1</sub>
+2) S-->A: {ID<sub>A</sub> || ID<sub>B</sub> || r<sub>1</sub> || k<sub>s</sub> || {ID<sub>A</sub> || k<sub>s</sub> || r<sub>1</sub>} p<sub>B</sub> } p<sub>A</sub>
+3) A-->B: {ID<sub>A</sub> || k<sub>s</sub> || r<sub>1</sub>} p<sub>B</sub>
+4) B-->A: {r<sub>2</sub>} k<sub>s</sub>
+5) A-->B: {r<sub>1</sub> + r<sub>2</sub>} k<sub>s</sub>
 
 Student Dat answered the teacher's question well, correctly analyzed the existing problem and found a solution success, in which only one modification in step 5 needs to be made. Please analyze the purpose of the protocol and try to guess the problem that Dat pointed out? If possible please Point out solutions as well as Dat's solution ideas.
 
 Sol: 
 
-This protocol is designed to perform session key generation for A and B through support of S (of course, including S's authentication to A) and hopefully prevent attacks from enemies who know the old (previously used) session key. The designer's idea is that even if the adversary has an old session key, it will not be able to respond successfully (in step 5) because it does not know r~1~. However, the sinister enemy may have recorded everything messages in the past, so it is possible to trace the messages used with the old session key and from there easily find r~1~ (try to think more about why?). This is the weakness that Dat discovered. From there, come up with a solution to hide r~1~, such as using hash in step 5 (please find a way to specify it yourself).
+This protocol is designed to perform session key generation for A and B through support of S (of course, including S's authentication to A) and hopefully prevent attacks from enemies who know the old (previously used) session key. The designer's idea is that even if the adversary has an old session key, it will not be able to respond successfully (in step 5) because it does not know r<sub>1</sub>. However, the sinister enemy may have recorded everything messages in the past, so it is possible to trace the messages used with the old session key and from there easily find r<sub>1</sub> (try to think more about why?). This is the weakness that Dat discovered. From there, come up with a solution to hide r<sub>1</sub>, such as using hash in step 5 (please find a way to specify it yourself).
 
 Can you guess and explain Dung's idea in details?
 
@@ -136,17 +136,17 @@ In the original PRT_AU protocol, the third step presents a security vulnerabilit
 Dung’s proposed protocol mitigates this risk by implementing a challenge-response mechanism. In this improved protocol, the server S sends a random number R to user A. User A then encrypts the value of R+1 using the hash of their password and sends it back to the server. This allows user A to prove their identity without transmitting their password or its hash. The server can decrypt the received value using the stored hash of A’s password and verify if it matches R+1. If the verification is successful, the server acknowledges the authenticity of user A and sends a session key ks, encrypted with the hash of A’s password, for secure communication during the session.
 In summary, Dung’s protocol enhances the security of the authentication process by preventing the exposure of the password hash and introducing a session key for secure communication. This makes it more resistant to man-in-the-middle attacks and impersonation attempts.
 
-EX: From M, an English text, one generates Vigenere code with the keys K~1~, K~2~, K~3~ below to create ciphertexts X~1~, X~2~ and X~3~. Let's try to give a comparative assessments of the ICs code X~1~, X~2~ and X~3~ with clear and detailed arguments. K~1~ = "12345678", K~2~ = "hellobello", K~3~ = 8 characters extracted from the student full name (i.e delete some characters from the full name). For example, "Nguyễn Lê Thanh" ==> "Nlethanh" or "nguyentha", ...
+EX: From M, an English text, one generates Vigenere code with the keys K<sub>1</sub>, K<sub>2</sub>, K<sub>3</sub> below to create ciphertexts X<sub>1</sub>, X<sub>2</sub> and X<sub>3</sub>. Let's try to give a comparative assessments of the ICs code X<sub>1</sub>, X<sub>2</sub> and X<sub>3</sub> with clear and detailed arguments. K<sub>1</sub> = "12345678", K<sub>2</sub> = "hellobello", K<sub>3</sub> = 8 characters extracted from the student full name (i.e delete some characters from the full name). For example, "Nguyễn Lê Thanh" ==> "Nlethanh" or "nguyentha", ...
 
 Sol:
 
 We have: 
 
-K~1~ = "12345678"
-K~2~ = "hellobello"
-K~3~ = "tranmuan"
+K<sub>1</sub> = "12345678"
+K<sub>2</sub> = "hellobello"
+K<sub>3</sub> = "tranmuan"
 
-K~1~ has 8 substitutions, K~2~ has 5 substitutions, K~3~ has 6 substitutions. Because the more potential tables, the more the IC is reduced. Based on the comparison of the number of substitution tables used in the keys, we have 5 < 6 < 8, so the IC of code X~2~ is highest, then X~3~ and finally X~1~. 
+K<sub>1</sub> has 8 substitutions, K<sub>2</sub> has 5 substitutions, K<sub>3</sub> has 6 substitutions. Because the more potential tables, the more the IC is reduced. Based on the comparison of the number of substitution tables used in the keys, we have 5 < 6 < 8, so the IC of code X<sub>2</sub> is highest, then X<sub>3</sub> and finally X<sub>1</sub>. 
 
 - We will explain why the more potential tables used, the lower the IC (1)
 
@@ -154,9 +154,9 @@ K~1~ has 8 substitutions, K~2~ has 5 substitutions, K~3~ has 6 substitutions. Be
 
 On the other hand, the concept of IC is defined by : 
 
-\[IC = \frac{\sumf_i(f_i - 1)}{n(n - 1)}\] 
+$$IC = \frac{\sumf_i(f_i - 1)}{n(n - 1)}$$ 
 
-where f~i~ is the frequency of letters in the alphabet with i = 1,...,26 and n is the number of letters in the ciphertext. According to the Cauchy inequality, \(\sum{f_i(f_i - 1)}\) is the smallest when the f~i~ are equal. Therefore, if the f~i~ are closed to each other, the IC decreases, thereby (1) is proven. 
+where f~i~ is the frequency of letters in the alphabet with i = 1,...,26 and n is the number of letters in the ciphertext. According to the Cauchy inequality, $\sum{f_i(f_i - 1)}$ is the smallest when the f~i~ are equal. Therefore, if the f<sub>i</sub> are closed to each other, the IC decreases, thereby (1) is proven. 
 
 Ex: Point out the connection between the birthdate paradox and Diriclet's principle. Why we need to care about that, with regard to information security? 
 
@@ -168,7 +168,7 @@ Both these principles are connected in the sense that they deal with probabiliti
 In information security, this concept is used in a type of attack known as the Birthday Attack, which aims to find collisions in a hash function. Therefore, in practice, we need to choose |Y|, the size of the hash output, to be large enough so that an exhaustive search is computationally infeasible, thereby enhancing security.
 
 
-Ex: Alice and Bob have the following exchange: 
+<!--Ex: Alice and Bob have the following exchange: 
 
 Ex: When first learning about the DES code system, a student A commented that perhaps only designing 8 loops would be enough; Student B responded that years of practice showed that using up to 16 loops was correct. Let me clearly analyze the rationale for the above comments. 
 
@@ -176,50 +176,50 @@ Ex: Suppose in an operating system that simulates Unix, one needs to set up a sy
 
 Ex: Traditional password authentication systems can have problems with terminal attacks, when an attacker can access the connection from the client to the server. Clearly analyze this problem and how to solve it. Refers (briefly) to the Kerberos system as a general solution.
 
-Ex: How to generate large prime numbers (RSA) efficiently? State and analyze a specific algorithm if known.
+Ex: How to generate large prime numbers (RSA) efficiently? State and analyze a specific algorithm if known.-->
 
 Ex: Alice and Bob have the following exchange: 
-- Alice say that the correctness of RSA is directly derived from Euler's theorem; but Bob disagrees, which ever side you think is right, please argue to defend that opinion
-- Bob said that the extended GCD algorithm is a series of iterations in which each loop must execute a series of 8-9 complicated computation statements that are difficult to remember. However, Alice say that is not the case , each loop must consist of 3 small processing blocks with similar properties. If you agree with me, please argue to defend your opinion. 
+- a) Alice say that the correctness of RSA is directly derived from Euler's theorem; but Bob disagrees, which ever side you think is right, please argue to defend that opinion
+- b) Bob said that the extended GCD algorithm is a series of iterations in which each loop must execute a series of 8-9 complicated computation statements that are difficult to remember. However, Alice say that is not the case , each loop must consist of 3 small processing blocks with similar properties. If you agree with me, please argue to defend your opinion. 
 
 Sol:
 a) We see, the correctness of RSA algorithm is deduced from Euler's theorem only in the case where x and or are prime together, then we have: 
 
-\[X^\phi(n) \equiv 1 mod n\]
+$$X^\phi(n) \equiv 1 mod n$$
 
 However, in the general case, we have: 
-\[X^{\phi(n) + 1} \equiv X mod n (2)\] 
+$$X^{\phi(n) + 1} \equiv X mod n (2)$$
 
-Indeed, we will prove (2). We have \(n = pq\)
-We will prove: \[X^{\phi(n) + 1} \equiv X (mod p) (3)\]
-\[X^{\phi(n) + 1} \equiv X (mod q) (4)\]
+Indeed, we will prove (2). We have $n = pq$
+We will prove: $$X^{\phi(n) + 1} \equiv X (mod p) (3)$$
+$$X^{\phi(n) + 1} \equiv X (mod q) (4)$$
 
 Then from (3), (4) combined with the Chinese remainder theorem, we will have something to prove (2)
 
 Indeed, (3) and (4) are always true in all cases, even if X is not coprime with n
 
-Proof (3): If X is divisible by P, then \(X^{\phi(n) + 1} \equiv 0 (mod p)\)
-\[X^{\phi(n)} \equiv X (mod p)\]
+Proof (3): If X is divisible by P, then $X^{\phi(n) + 1} \equiv 0 (mod p)$
+$$X^{\phi(n)} \equiv X (mod p)$$
 
-If X is not divisible by P, we have \(\phi(n) + 1 \equiv (p-1)(q-1) + 1 \Rightarrow \phi(n) + 1 \equiv 1 mod (p-1)\)
+If X is not divisible by P, we have $\phi(n) + 1 \equiv (p-1)(q-1) + 1 \Rightarrow \phi(n) + 1 \equiv 1 mod (p-1)$
 
 According to the Fermat's little theorem, we have: 
-\[X^{(p-1)(q-1)} \equiv 1 (mod p) \Rightarrow X^{\phi(n)} \equiv 1 (mod p)\]
+$$X^{(p-1)(q-1)} \equiv 1 (mod p) \Rightarrow X^{\phi(n)} \equiv 1 (mod p)$$
 
 Thus (3) is true for all X
 Similarly (4) is true for all X
 
-\(\Rightarrow X^{\phi(n) + 1} \equiv X (mod n) (q.e.d)\)
+$\Rightarrow X^{\phi(n) + 1} \equiv X (mod n) (q.e.d)$
 
 b) I agree with Alice opinion. It is true that the extended GCD algorithm is a loop algorithm that must perform 8-9 operations each time, but the operations can be divided into blocks of similar nature and are easier to remember. Specifically, the 3 blocks are: 
 
-In case \(r \neq 0\): 
+In case $r \neq 0$: 
 
-- Block 1 includes reassignments to \(n_1\) and \(n_2\) {\(n_1 = n_2, n_2 = r\)}
+- Block 1 includes reassignments to $n_1$ and $n_2$ {$n_1 = n_2, n_2 = r$}
 
-- Block 2 includes reassignments to \(a_1\) and \(a_2\) {\(t = a_2, a_2 = a_1 - q * a_2, a_1 = t\)}
+- Block 2 includes reassignments to $a_1$and $a_2$ {$t = a_2, a_2 = a_1 - q * a_2, a_1 = t$}
 
-- Block 3 includes reassignments to \(b_1\) and \(b_2\) {\(t = b_2, b_2 = b_1 - q * b_2, b_1 = t\)}
+- Block 3 includes reassignments to $b_1$ and $b_2$ {$t = b_2, b_2 = b_1 - q * b_2, b_1 = t$}
 
 So it can be seen that all 3 blocks perform reassignments of values has to 2 variables, moreover, blocks 2 and 3 have similar reassignment processing structures. In terms of hardware, block 2 and block 3 can have the same hardware design, in terms of software block 2 and block 3 can use the same procedure. Although block 1 has an internal value assignment structure that is not similar to block 2 and 3, the assignment in block 1 is very simple and easy to remember
 
@@ -248,28 +248,28 @@ b) In case of hourly session key exchange (beginning of each new hour). We need 
 
 c) 
 
-A -> B : {Alice || \(k_s\)}\(k_{BC}\)
-B -> A : {\(r_2\) || h(\(r_2\))}\(k_s\)
-A -> B: {\(r_2 - 1\) || h(\(r_2 - 1\))}\(k_s\)
+A -> B : {Alice || $k_s$}$k_{BC}$
+B -> A : {$r_2$ || h($r_2$)}$k_s$
+A -> B: {$r_2 - 1$ || h($r_2 - 1$)}$k_s$
 
-with h being a common hash function in the company and the secret, the above method is possible when the enemy holds the old key but does not hold the hash function, he will not be able to respond accurately to B \(\Rightarrow\) Attacker fails. However, this solution requires the hash function to be secret. 
+with h being a common hash function in the company and the secret, the above method is possible when the enemy holds the old key but does not hold the hash function, he will not be able to respond accurately to B $\Rightarrow$ Attacker fails. However, this solution requires the hash function to be secret. 
 
 
 d) The protocol using additional counter variables will be implement as follows: 
 
 A -> C : Alice || Bob
-C -> A : {Alice || Bob || Counter~AC~ || k~s~ || {Alice || Counter~AB~ || k~s~}~k~BC~~}~k~AC~~
-A -> B : {Alice || Counter~AB~ || k~s~}~k~BC~~
-B -> A : {r~1~}~k~s~~
-A -> B : {r~1~ - 1}~k~s~~
+C -> A : {Alice || Bob || Counter<sub>AC</sub> || k<sub>s</sub> || {Alice || Counter<sub>AB</sub> || k<sub>s</sub>}<sub>k<sub>BC</sub></sub>}<sub>k<sub>AC</sub></sub>
+A -> B : {Alice || Counter<sub>AB</sub> || k<sub>s</sub>}<sub>k<sub>BC</sub></sub>
+B -> A : {r<sub>>1</sub>}<sub>k<sub>s</sub></sub>
+A -> B : {r<sub>1</sub> - 1}<sub>k<sub>s</sub></sub>
 
-After performing the above linking process, counter~AC~ will be increased by 1, counter~AB~ will also be increased by 1. During storage, counter is treated as a symmetric variable used by both parties and it must be kept secret so that it can not be stolen by an attacker 
+After performing the above linking process, counter<sub>AC</sub> will be increased by 1, counter<sub>AB</sub> will also be increased by 1. During storage, counter is treated as a symmetric variable used by both parties and it must be kept secret so that it can not be stolen by an attacker 
 
 We see the above protocol is first improved in the Needham-Schroeder so the parties can authenticate each other during the information transfer process
 
-We will further prove that the above protocol is resilient against replay attack and in case the attacker has some session key k~s~
+We will further prove that the above protocol is resilient against replay attack and in case the attacker has some session key k<sub>s</sub>
 
-Indeed, if an attacker wants to forge a message C -> A, then A can be completely checked with counter~AC~. In addition, an attacker without the key k~AC~ can not expose and get the value of counter~AC~. Next, if the imposter has the session key k~s~ and wants to establish a fake conversation between A and B, it will not work because A -> B needs additional information counter~AB~, if the attacker does not have the key k~BC~ then it is not possible to see counter~AB~, through which B can completely detect the fake enemy and not establish the link. 
+Indeed, if an attacker wants to forge a message C -> A, then A can be completely checked with counter<sub>AC</sub>. In addition, an attacker without the key k<sub>AC</sub> can not expose and get the value of counter<sub>AC</sub>. Next, if the imposter has the session key k<sub>s</sub> and wants to establish a fake conversation between A and B, it will not work because A -> B needs additional information counter<sub>AB</sub>, if the attacker does not have the key k<sub>BC</sub> then it is not possible to see counter<sub>AB</sub>, through which B can completely detect the fake enemy and not establish the link. 
  
 
 <!--
