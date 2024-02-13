@@ -248,11 +248,11 @@ b) In case of hourly session key exchange (beginning of each new hour). We need 
 
 c) 
 
-A -> B : {Alice || $k_s$}$k_{BC}$
+A -> B : {Alice || k<sub>s</sub>}k<sub>BC</sub>
 
-B -> A : {$r_2$ || h($r_2$)}$k_s$
+B -> A : {r<sub>2</sub> || h(r<sub>2</sub>)}k<sub>s</sub>
 
-A -> B: {$r_2 - 1$ || h($r_2 - 1$)}$k_s$
+A -> B: {r<sub>2</sub> - 1 || h(r<sub>2</sub> - 1)}k<sub>s</sub>
 
 with h being a common hash function in the company and the secret, the above method is possible when the enemy holds the old key but does not hold the hash function, he will not be able to respond accurately to B $\Rightarrow$ Attacker fails. However, this solution requires the hash function to be secret. 
 
@@ -265,7 +265,7 @@ C -> A : {Alice || Bob || Counter<sub>AC</sub> || k<sub>s</sub> || {Alice || Cou
 
 A -> B : {Alice || Counter<sub>AB</sub> || k<sub>s</sub>}<sub>k<sub>BC</sub></sub>
 
-B -> A : {r<sub>>1</sub>}<sub>k<sub>s</sub></sub>
+B -> A : {r<sub>1</sub>}<sub>k<sub>s</sub></sub>
 
 A -> B : {r<sub>1</sub> - 1}<sub>k<sub>s</sub></sub>
 
