@@ -1,6 +1,6 @@
 
-
-## Afternoon
+<!--
+## Exam 1
 
 1. When first learning about the DES code system, a student A commented that perhaps only designing 8 loops would be enough; Student B responded that years of practice showed that using up to 16 loops was correct. Let me clearly analyze the rationale for the above comments. 
 
@@ -12,9 +12,11 @@
 
 4. How to generate large prime numbers (RSA) efficiently? State and analyze a specific algorithm if known.
 
+
 # Part A
 ## Morning
 X = 48
+
 Z = X mod 4
 
 Suppose H is a hash function with output size of (Z+3)*16 bits. Suppose Scorp-k (k=1-9) is a chip capable of performing 10k+2 H hashes per second (for example, Scorp-2 can perform 10000 hashes per second). This is the fastest and most economical chip in its class on the market at a unit price of (k+1)! *$1000 (Scorp-2 costs $6000 with 6=3!). Consider the following Bit-Commitment protocol used for soccer betting and address the two questions below.
@@ -33,6 +35,7 @@ b) Suppose that the betting game starts 3 days before the football match event, 
 
 c) If we use the above protocol to let Alice "commit" a 10-bit string, that is, **_b_** is a 10-bit binary string, will the security guarantee be as high as before? Use probability for analysis.
 
+-->
 
 # Final exam 20212
 1. Analyze the weaknesses of building an access control mechanism based on the definition of ACM using 3 sentences
@@ -60,11 +63,11 @@ PRT_AU:
 
 PRT_00 (An):
 
-1) A-->S: ID~A~
+1)    A-->S: ID<sub>A</sub>
 
-2) S-->A: R
+2)    S-->A: R
 
-3) A-->S: H(PW~A~||R)
+3)    A-->S: H(PW<sub>A</sub>||R)
 
 PRT_10 (Binh):
 
