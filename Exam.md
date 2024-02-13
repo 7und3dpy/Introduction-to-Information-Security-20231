@@ -98,7 +98,7 @@ The symbols used above have the following meanings:
 
 ID<sub>A</sub> – is the ID (identity) of A; R is a random number; T is a timestamp at the current time (by computer clock)
 
-PW<sub>A</sub> is A's password string; pA is the hash value of A's password, i.e. p<sub>A</sub> =H(PW<sub>A</sub>) and where H is a pre-determined hash function.
+PW<sub>A</sub> is A's password string; p<sub>A</sub> is the hash value of A's password, i.e. p<sub>A</sub> =H(PW<sub>A</sub>) and where H is a pre-determined hash function.
 
 
 Q1: Analyze the purpose of PRT_AU and then compare PROT_0x to clearly see the advantages and disadvantages.
@@ -154,7 +154,7 @@ K<sub>1</sub> has 8 substitutions, K<sub>2</sub> has 5 substitutions, K<sub>3</s
 
 On the other hand, the concept of IC is defined by : 
 
-$$IC = \frac{\sumf_i(f_i - 1)}{n(n - 1)}$$ 
+$$IC = \frac{\sum{f_i(f_i - 1)}}{n(n - 1)}$$ 
 
 where f~i~ is the frequency of letters in the alphabet with i = 1,...,26 and n is the number of letters in the ciphertext. According to the Cauchy inequality, $\sum{f_i(f_i - 1)}$ is the smallest when the f~i~ are equal. Therefore, if the f<sub>i</sub> are closed to each other, the IC decreases, thereby (1) is proven. 
 
@@ -215,11 +215,11 @@ b) I agree with Alice opinion. It is true that the extended GCD algorithm is a l
 
 In case $r \neq 0$: 
 
-- Block 1 includes reassignments to $n_1$ and $n_2$ {$n_1 = n_2, n_2 = r$}
+- Block 1 includes reassignments to $n_1$ and $n_2$ : $n_1 = n_2, n_2 = r$
 
-- Block 2 includes reassignments to $a_1$and $a_2$ {$t = a_2, a_2 = a_1 - q * a_2, a_1 = t$}
+- Block 2 includes reassignments to $a_1$ and $a_2$ : $t = a_2, a_2 = a_1 - q * a_2, a_1 = t$
 
-- Block 3 includes reassignments to $b_1$ and $b_2$ {$t = b_2, b_2 = b_1 - q * b_2, b_1 = t$}
+- Block 3 includes reassignments to $b_1$ and $b_2$ : $t = b_2, b_2 = b_1 - q * b_2, b_1 = t$
 
 So it can be seen that all 3 blocks perform reassignments of values has to 2 variables, moreover, blocks 2 and 3 have similar reassignment processing structures. In terms of hardware, block 2 and block 3 can have the same hardware design, in terms of software block 2 and block 3 can use the same procedure. Although block 1 has an internal value assignment structure that is not similar to block 2 and 3, the assignment in block 1 is very simple and easy to remember
 
@@ -249,7 +249,9 @@ b) In case of hourly session key exchange (beginning of each new hour). We need 
 c) 
 
 A -> B : {Alice || $k_s$}$k_{BC}$
+
 B -> A : {$r_2$ || h($r_2$)}$k_s$
+
 A -> B: {$r_2 - 1$ || h($r_2 - 1$)}$k_s$
 
 with h being a common hash function in the company and the secret, the above method is possible when the enemy holds the old key but does not hold the hash function, he will not be able to respond accurately to B $\Rightarrow$ Attacker fails. However, this solution requires the hash function to be secret. 
@@ -258,9 +260,13 @@ with h being a common hash function in the company and the secret, the above met
 d) The protocol using additional counter variables will be implement as follows: 
 
 A -> C : Alice || Bob
+
 C -> A : {Alice || Bob || Counter<sub>AC</sub> || k<sub>s</sub> || {Alice || Counter<sub>AB</sub> || k<sub>s</sub>}<sub>k<sub>BC</sub></sub>}<sub>k<sub>AC</sub></sub>
+
 A -> B : {Alice || Counter<sub>AB</sub> || k<sub>s</sub>}<sub>k<sub>BC</sub></sub>
+
 B -> A : {r<sub>>1</sub>}<sub>k<sub>s</sub></sub>
+
 A -> B : {r<sub>1</sub> - 1}<sub>k<sub>s</sub></sub>
 
 After performing the above linking process, counter<sub>AC</sub> will be increased by 1, counter<sub>AB</sub> will also be increased by 1. During storage, counter is treated as a symmetric variable used by both parties and it must be kept secret so that it can not be stolen by an attacker 
