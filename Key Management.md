@@ -16,7 +16,8 @@ Sol:
 
 - The protocol without $r_1$ would be as follows:
 
-![Alt text](image.png)
+![alt text](image.png)
+
 Suppose that at some point in the past, for example the year 2000, Alice and Bob used the above protocol to exchange session key $k_s$
 
 At that time, the Eve attacker had not yet broken the $k_s$ key, so the transaction was safe at that time. However, some time later, for example in 2016, the Eve attacker somehow obtained the $k_s$ key and retrieved all the packets that were exchanged in the 2000 session.
